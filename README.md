@@ -88,7 +88,7 @@ Lot of things. From the point of view of implementation, the following:
 * **offline/cache support**. Ideally, this should be provided in the "data>local" package (currently empty)
 * **improve test coverage** (given the time costrains tests have been provided to give an idea of what can be tested and how, but several scenarios are not covered at the moment; also, automation tests are missing)
 * **screen rotation**: i'm not exactly a fan of screen rotations, although it;s 100% true that any app should properly handle screen rotation, and this is an important point especially for end users of the app, I have always thought that from the point of view of development screen rotation in android is more a technical requirement or trick than a real feature: as a developer I would like to focus first and more on business requirements than screen rotation
-* **CI/CD pipeline**: when someone try to push on pre or master branch, this should trigger the executions of the test suite. I have had not itme to setup one yet but it's important to setup it in the early stages of the project, to avoid (as I might have done during this project) to commit in the history some code that breaks the tests 
+* **CI/CD pipeline**: when someone try to push on pre or master branch, this should trigger the executions of the test suite, and build both debug and release version. I have had not itme to setup one yet but it's important to setup it in the early stages of the project, to avoid to commit in the history some code that breaks the tests (or, as I did during this project, to realise just at last minute that proguard is missing) 
 * **UI/UX** design and experience.
 
 
