@@ -79,11 +79,12 @@ to create apk for debug or release version respectively.
 
 # Additional notes
 
-** API KEY**
+** OPNEWEATHER API KEY**
 My personal openweather API key has been used for this project and, in order to make the project self-contained, has been pushed and is visible inside the code. This in a production environment is of course a security fault. The API key should never been uploaded on the resporitory (especially a public one) and it would be better to store it in a file that is not committed. 
 
 ** Proguard **
-Release version of the app uses proguard
+Release version of the app uses proguard. However I did not provide signed version
+
 # !!TODO (a lot)
 
 Lot of things. From the point of view of implementation, the following:
