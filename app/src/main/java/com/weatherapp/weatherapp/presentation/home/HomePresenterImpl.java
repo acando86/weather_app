@@ -7,6 +7,7 @@ import com.weatherapp.weatherapp.Constants;
 import com.weatherapp.weatherapp.data.remote.WeatherService;
 import com.weatherapp.weatherapp.data.remote.pojo.WeatherList;
 import com.weatherapp.weatherapp.data.remote.pojo.WeatherResponse;
+import com.weatherapp.weatherapp.helper.Formatter;
 import com.weatherapp.weatherapp.presentation.base.BasePresenter;
 
 import java.util.ArrayList;
@@ -29,6 +30,9 @@ public class HomePresenterImpl extends BasePresenter<HomeContract.HomeView> impl
 
     @Inject
     WeatherService restClient;
+
+    @Inject
+    Formatter formatter;
 
     @Override
     public void attachView(HomeContract.HomeView mvpView) {
@@ -62,9 +66,9 @@ public class HomePresenterImpl extends BasePresenter<HomeContract.HomeView> impl
                         for (int loop =0; loop < array.length; loop++) {
                             HomeItem item = new HomeItem();
                             WeatherList weatherList = array[loop];
-                            item.setTime(weatherList.getForecastTime()); // TODO format
+                            item.setTime(formatter.formattedDateFromString(weatherList.getForecastTime()));
                             item.setDescription(weatherList.getWeather()[0].getDescription());
-                            item.setTemperature(Double.toString(weatherList.getMain().getTemp()));
+                            item.setTemperature(formatter.formatTemperature(weatherList.getMain().getTemp()));
                             list.add(item);
                         }
                         getMvpView().showResults(list);
