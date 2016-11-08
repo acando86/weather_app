@@ -48,10 +48,21 @@ Regarding MVP, every user case has
 * butterknife: just to remove some boilerplate of findViewById code
 
 
+# Run app and tests
 
+Clone the project
+Open the project in Android Studio
+The app can be built and run using Build > Build APK and installing the resulting APK file on the device
+To run the unit tests, just right click on the test folder and select "Run" in the available options
 
+(!) Warning: android 2.2 is required
+apt command  from the android-apt plugin was used in android studio < 2.2 for dagger2/butterknife
+Add plugin: 'com.neenbedankt.android-apt' and replace annotationProcessor as appropriate if you are running an older version.
+Further information here: https://github.com/bluelinelabs/LoganSquare
 
-# !!TODO
+E2E functional and automation tests have not been provided. unit tests covered some of the basic scenarios. 
+
+# !!TODO (a lot)
 
 Lot of things. From the point of view of implementation, the following:
 * **offline/cache support**. Ideally, this should be provided in the "data>local" package (currently empty)
