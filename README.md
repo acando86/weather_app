@@ -1,7 +1,9 @@
 # weather_app
 Weather App
 
-Basic app based on OpenWeather APIs that shows weather forecasting for the upcoming 5 days
+Basic app based on OpenWeather APIs that shows weather forecasting for the upcoming 5 days in London
+
+http://api.openweathermap.org/data/2.5/forecast/city?id=524901&APPID=<YOUR_APP_ID>
 
 # Architecture
 
