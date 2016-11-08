@@ -10,7 +10,7 @@ import java.util.List;
 public class HomeModel {
 
     private String town;
-    private List<HomeItem> listForest;
+    private List<HomeItem> list;
 
     public String getTown() {
         return town;
@@ -20,11 +20,11 @@ public class HomeModel {
         this.town = town;
     }
 
-    public List<HomeItem> getListForest() {
-        return listForest;
+    public List<HomeItem> getList() {
+        return list;
     }
 
-    public void setListForest(List<HomeItem> listForest) {
-        this.listForest = listForest;
+    public void setList(List<HomeItem> list) {
+        this.list = list;
     }
 }

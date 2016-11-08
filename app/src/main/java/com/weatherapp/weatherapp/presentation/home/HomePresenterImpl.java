@@ -4,14 +4,8 @@ import android.util.Log;
 
 import com.weatherapp.weatherapp.BuildConfig;
 import com.weatherapp.weatherapp.Constants;
-import com.weatherapp.weatherapp.data.remote.WeatherService;
-import com.weatherapp.weatherapp.data.remote.pojo.WeatherList;
-import com.weatherapp.weatherapp.data.remote.pojo.WeatherResponse;
-import com.weatherapp.weatherapp.helper.Formatter;
+import com.weatherapp.weatherapp.domain.Repository;
 import com.weatherapp.weatherapp.presentation.base.BasePresenter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -29,10 +23,13 @@ public class HomePresenterImpl extends BasePresenter<HomeContract.HomeView> impl
     private static final String LOG_TAG = "HomePresenterImpl";
 
     @Inject
-    WeatherService restClient;
+    Repository repository;
 
-    @Inject
-    Formatter formatter;
+    HomeModel model;
+
+    public HomeModel getModel() {
+        return model;
+    }
 
     @Override
     public void attachView(HomeContract.HomeView mvpView) {
@@ -44,10 +41,10 @@ public class HomePresenterImpl extends BasePresenter<HomeContract.HomeView> impl
 
     @Override
     public void refreshData() {
-        restClient.fetchWeatherForecasts(Constants.LOCATION_ID)
+        repository.retriveHomeModel(Constants.LOCATION_ID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<WeatherResponse>() {
+                .subscribe(new Subscriber<HomeModel>() {
                     @Override
                     public final void onCompleted() {
                         // do nothing
@@ -57,26 +54,15 @@ public class HomePresenterImpl extends BasePresenter<HomeContract.HomeView> impl
                     public final void onError(Throwable e) {
                         if (BuildConfig.ENABLE_LOGS) Log.e(LOG_TAG, e.getMessage());
                         getMvpView().showError();
+                        getMvpView().hideLoading();
                     }
 
                     @Override
-                    public final void onNext(WeatherResponse response) {
-                        WeatherList[] array = response.getList();
-                        List<HomeItem> list = new ArrayList<>();
-                        for (int loop =0; loop < array.length; loop++) {
-                            HomeItem item = new HomeItem();
-                            WeatherList weatherList = array[loop];
-                            item.setTime(formatter.formattedDateFromString(weatherList.getForecastTime()));
-                            item.setDescription(weatherList.getWeather()[0].getDescription());
-                            item.setTemperature(formatter.formatTemperature(weatherList.getMain().getTemp()));
-                            list.add(item);
-                        }
-                        getMvpView().showResults(list);
+                    public final void onNext(HomeModel response) {
+                        getMvpView().showResults(response.getList());
                         getMvpView().hideLoading();
                         getMvpView().hideError();
-                        if ( response.getCity() != null ) {
-                            getMvpView().setTown(response.getCity().getName());
-                        }
+                        getMvpView().setTown(response.getTown());
 
                     }
                 });

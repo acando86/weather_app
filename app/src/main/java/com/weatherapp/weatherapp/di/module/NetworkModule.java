@@ -3,6 +3,7 @@ package com.weatherapp.weatherapp.di.module;
 import com.github.aurae.retrofit2.LoganSquareConverterFactory;
 import com.weatherapp.weatherapp.data.remote.AuthenticationInterceptor;
 import com.weatherapp.weatherapp.data.remote.WeatherService;
+import com.weatherapp.weatherapp.domain.Repository;
 import com.weatherapp.weatherapp.helper.Formatter;
 
 import java.util.concurrent.TimeUnit;
@@ -110,6 +111,13 @@ public class NetworkModule {
     @Provides
     Formatter provideFormatter(Retrofit retrofit) {
         return new Formatter();
+    }
+
+
+    @Singleton
+    @Provides
+    Repository repository(Formatter formatter, WeatherService service) {
+        return new Repository(service,formatter);
     }
 
 }
