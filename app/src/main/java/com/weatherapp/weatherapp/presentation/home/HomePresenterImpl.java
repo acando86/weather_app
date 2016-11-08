@@ -1,17 +1,14 @@
 package com.weatherapp.weatherapp.presentation.home;
 
-import android.util.Log;
-
-import com.weatherapp.weatherapp.BuildConfig;
 import com.weatherapp.weatherapp.Constants;
 import com.weatherapp.weatherapp.domain.Repository;
 import com.weatherapp.weatherapp.presentation.base.BasePresenter;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
+import rx.Scheduler;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 
 /**
@@ -25,11 +22,13 @@ public class HomePresenterImpl extends BasePresenter<HomeContract.HomeView> impl
     @Inject
     Repository repository;
 
-    HomeModel model;
+    @Inject
+            @Named("io")
+    Scheduler ioScheduler;
 
-    public HomeModel getModel() {
-        return model;
-    }
+    @Inject
+            @Named("main")
+    Scheduler mainScheduler;
 
     @Override
     public void attachView(HomeContract.HomeView mvpView) {
@@ -41,9 +40,9 @@ public class HomePresenterImpl extends BasePresenter<HomeContract.HomeView> impl
 
     @Override
     public void refreshData() {
-        repository.retriveHomeModel(Constants.LOCATION_ID)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+         repository.retriveHomeModel(Constants.LOCATION_ID)// ideally, location id is provided by the user (view)
+                .subscribeOn(ioScheduler)
+                .observeOn(mainScheduler)
                 .subscribe(new Subscriber<HomeModel>() {
                     @Override
                     public final void onCompleted() {
@@ -52,19 +51,23 @@ public class HomePresenterImpl extends BasePresenter<HomeContract.HomeView> impl
 
                     @Override
                     public final void onError(Throwable e) {
-                        if (BuildConfig.ENABLE_LOGS) Log.e(LOG_TAG, e.getMessage());
-                        getMvpView().showError();
-                        getMvpView().hideLoading();
+                        if (isViewAttached()) {
+                            getMvpView().hideLoading();
+                            getMvpView().showError();
+                        }
                     }
 
                     @Override
                     public final void onNext(HomeModel response) {
-                        getMvpView().showResults(response.getList());
-                        getMvpView().hideLoading();
-                        getMvpView().hideError();
-                        getMvpView().setTown(response.getTown());
+                        if (isViewAttached()) {
+                            getMvpView().hideLoading();
+                            getMvpView().hideError();
+                            getMvpView().setTown(response.getTown());
+                            getMvpView().showResults(response.getList());
+                        }
 
                     }
                 });
     }
+
 }

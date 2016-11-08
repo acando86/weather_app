@@ -3,23 +3,12 @@ package com.weatherapp.weatherapp.data.remote;
 import com.github.aurae.retrofit2.LoganSquareConverterFactory;
 import com.weatherapp.weatherapp.data.remote.pojo.WeatherResponse;
 
-import junit.framework.Assert;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
-
-import dagger.Provides;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
-import okhttp3.mockwebserver.RecordedRequest;
-import retrofit2.CallAdapter;
-import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import rx.observers.TestSubscriber;

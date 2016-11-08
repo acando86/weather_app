@@ -1,5 +1,6 @@
 package com.weatherapp.weatherapp.domain;
 
+import com.weatherapp.weatherapp.Constants;
 import com.weatherapp.weatherapp.data.remote.WeatherService;
 import com.weatherapp.weatherapp.data.remote.pojo.WeatherList;
 import com.weatherapp.weatherapp.data.remote.pojo.WeatherResponse;
@@ -14,14 +15,21 @@ import rx.Observable;
 import rx.functions.Func1;
 
 /**
- * Provides Data
+ * Provides additional layer between data requesrts and presentation layer.
+ * This layer can be used to handle cache, or to map netwrok models into view models.
  * Created by alessandro.candolini on 08/11/2016.
  */
 
 public class Repository {
 
+    /**
+     * Rest service for API request
+     */
     private WeatherService service;
 
+    /**
+     * Formatter to format output
+     */
    private Formatter formatter;
 
     public Repository(WeatherService service, Formatter formatter) {
@@ -29,6 +37,12 @@ public class Repository {
         this.formatter = formatter;
     }
 
+    /**
+     * Call network layer and provides new fresh data in the correct format.
+     * <P>This class offers an additional layer to wrap network request, handle cache, offline mode etc</P>
+     * @param cityId id of the town
+     * @return obnservabe of home model
+     */
     public Observable<HomeModel> retriveHomeModel(int cityId) {
         Observable<WeatherResponse>  networkObservable =      service.fetchWeatherForecasts(cityId);
 

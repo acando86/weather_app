@@ -1,42 +1,33 @@
 package com.weatherapp.weatherapp.di.module;
 
 import com.weatherapp.weatherapp.data.remote.WeatherService;
+import com.weatherapp.weatherapp.domain.Repository;
 import com.weatherapp.weatherapp.helper.Formatter;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import retrofit2.Retrofit;
-import rx.Scheduler;
-import rx.schedulers.Schedulers;
 
 import static org.mockito.Mockito.mock;
 
-
+/**
+ * Created by alessandro.candolini on 08/11/2016.
+ */
 @Module
 public class TestNetworkModule extends NetworkModule {
 
-    public Scheduler ioScheduler = Schedulers.test();
-    public Scheduler mainThreadScheduler = Schedulers.test();
-    public Formatter mockFormatter = mock(Formatter.class);
-    public WeatherService mockPublicApi = mock(WeatherService.class);
+    public Repository mockRepository = mock(Repository.class);
 
-    public TestNetworkModule() {
-        super("/", "elwhfiw");
+    public TestNetworkModule(String baseUrl, String apiKey) {
+        super(baseUrl,apiKey);
     }
 
     @Override
     @Singleton
     @Provides
-    WeatherService provideWeatherRest(Retrofit retrofit) {
-        return retrofit.create(WeatherService.class);
+    Repository provideRpository(Formatter formatter, WeatherService service) {
+        return mockRepository;
     }
 
-    @Override
-    @Singleton
-    @Provides
-    Formatter provideFormatter(Retrofit retrofit) {
-        return new Formatter();
-    }
 }

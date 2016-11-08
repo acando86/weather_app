@@ -116,7 +116,7 @@ public class NetworkModule {
 
     @Singleton
     @Provides
-    Repository repository(Formatter formatter, WeatherService service) {
+    Repository provideRpository(Formatter formatter, WeatherService service) {
         return new Repository(service,formatter);
     }
 
