@@ -19,6 +19,9 @@ public class WeatherCityCoord {
         return lon;
     }
 
+    public WeatherCityCoord() {
+    }
+
     public void setLon(double lon) {
         this.lon = lon;
     }

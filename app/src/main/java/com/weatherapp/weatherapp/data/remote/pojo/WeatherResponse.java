@@ -22,4 +22,30 @@ public class WeatherResponse {
     @JsonField
     private WeatherList[] list;
 
+    public WeatherResponse() {
+    }
+
+    public WeatherCity getCity() {
+        return city;
+    }
+
+    public void setCity(WeatherCity city) {
+        this.city = city;
+    }
+
+    public double getMessage() {
+        return message;
+    }
+
+    public void setMessage(double message) {
+        this.message = message;
+    }
+
+    public WeatherList[] getList() {
+        return list;
+    }
+
+    public void setList(WeatherList[] list) {
+        this.list = list;
+    }
 }

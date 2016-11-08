@@ -18,6 +18,9 @@ public class WeatherListWeather {
     @JsonField
     private int id;
 
+    public WeatherListWeather() {
+    }
+
     public String getIcon() {
         return this.icon;
     }

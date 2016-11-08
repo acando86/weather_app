@@ -23,7 +23,7 @@ public class BaseApplication extends Application {
         // if you get a "deprecated" warning, it is intended to notify you of unused methods and modules.
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
-                .networkModule(new NetworkModule())
+                .networkModule(new NetworkModule(BuildConfig.BASE_API_ENDPOINT,BuildConfig.OPENWEATHER_API_KEY))
                 .build();
     }
 

@@ -30,6 +30,9 @@ public class WeatherListMain {
     @JsonField
     private double temp_max;
 
+    public WeatherListMain() {
+    }
+
     public double getTemp() {
         return this.temp;
     }
