@@ -2,7 +2,11 @@ package com.weatherapp.weatherapp.data.remote;
 
 import junit.framework.Assert;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.io.IOException;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -17,11 +21,23 @@ import okhttp3.mockwebserver.RecordedRequest;
 
 public class AuthenticationInterceptorTest {
 
+    MockWebServer mockWebServer;
+
+    @Before
+    public void setUp() throws Exception {
+        mockWebServer = new MockWebServer();
+        mockWebServer.start();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        mockWebServer.shutdown();
+    }
+
+
     @Test
     public void testHttpInterceptor() throws Exception {
 
-        MockWebServer mockWebServer = new MockWebServer();
-        mockWebServer.start();
         mockWebServer.enqueue(new MockResponse());
         String apiKey = "wljew";
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
@@ -30,15 +46,12 @@ public class AuthenticationInterceptorTest {
 
         RecordedRequest request = mockWebServer.takeRequest();
         Assert.assertTrue(request.getPath().contains(apiKey));
-        mockWebServer.shutdown();
 
     }
 
     @Test
     public void testHttpInterceptor2() throws Exception {
 
-        MockWebServer mockWebServer = new MockWebServer();
-        mockWebServer.start();
         mockWebServer.enqueue(new MockResponse());
         String apiKey = "wljew";
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
@@ -47,7 +60,6 @@ public class AuthenticationInterceptorTest {
 
         RecordedRequest request = mockWebServer.takeRequest();
         Assert.assertTrue(request.getPath().contains(apiKey));
-        mockWebServer.shutdown();
 
     }
 
