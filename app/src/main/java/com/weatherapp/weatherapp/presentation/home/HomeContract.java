@@ -14,6 +14,7 @@ public class HomeContract {
 
     public interface HomeView extends ErrorLoadingView {
         public void showResults(List<HomeItem> list);
+        public void setTown(String town);
     }
 
     public interface HomePresenter extends MvpPresenter<HomeView> {
